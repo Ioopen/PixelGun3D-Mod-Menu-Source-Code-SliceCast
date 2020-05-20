@@ -11,6 +11,9 @@ https://www.mediafire.com/file/9wm3n9i5ov695l3/PixelGun3DFinalMod.apk/file
 Use this mod-menu template (only supported)
 https://github.com/Octowolve/Substrate-Template-With-Mod-Menu
 
+Note: 
+if errors comes up such as "getAbsoluteAdress" and "libName"... Delete every "libName" and compile to see if it works and build successfully!
+
 Discord: Licht#0315
 
 Credits: SliceCast / SliceCastify / Tiuu
