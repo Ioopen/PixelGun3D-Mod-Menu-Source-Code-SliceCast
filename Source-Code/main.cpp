@@ -18,7 +18,7 @@
 #include "Patching/Patch.h"
 #import "Includes/Utils.h"
 
-#if defined(__aarch64__)
+#if defined(__armv7__)
 #include "X64Hook/And64InlineHook.hpp"
 #else
 #include "Substrate/CydiaSubstrate.h"
@@ -83,12 +83,14 @@ const char* libName = "libil2cpp.so";
 
 void octo_hook(void *orig_fcn, void* new_fcn, void **orig_fcn_ptr)
 {
-#if defined(__aarch64__)
+#if defined(__armv7__)
     A64HookFunction(orig_fcn, new_fcn, orig_fcn_ptr);
 #else
     MSHookFunction(orig_fcn, new_fcn, orig_fcn_ptr);
 #endif
 }
+
+//Hooks
 
 void *(*Component_GetTransform)(void* component) = (void *(*)(void* ))getAbsoluteAddress(0xE6EBD8); // Component$$get_transform
 void *(*Component_GetGameObject)(void* component) = (void *(*)(void* ))getAbsoluteAddress(0xE6EC68); // Component$$get_gameObject
@@ -235,14 +237,14 @@ void(*old_PlayerMoveCUpdate)(void *instance);
 void PlayerMoveCUpdate(void *instance) {
     if(instance != NULL) {
         {
-            *(int *) ((uint64_t) instance + 0x328) = 203219142;
+            *(int *) ((uint64_t) instance + 0x328) = 203219142; //player_move_c&&myPlayerID
         }
         if(!PlayerMoveCHookUpdateInitialized){
             PlayerMoveCHookUpdateInitialized = true;
             LOGI("GameManager_LateUpdate hooked");
         }
         if (chams) {
-            *(bool *) ((uint64_t) instance + 0x3A8) = true;
+            *(bool *) ((uint64_t) instance + 0x3A8) = true; //player_move_c$$activatedXray
         }
         if (imInvisible) {
             *(bool *) ((uint64_t) instance + 0x2BA) = true;
@@ -273,19 +275,19 @@ void WeapSoundsUpdate(void *instance) {
             *(bool *) ((uint64_t) instance + 0x105) = true;
         }
         if (shotgun) {
-            *(bool *) ((uint64_t) instance + 0x106) = true;
+            *(bool *) ((uint64_t) instance + 0x106) = true; //isShotgun
         }
         if (reflectdamage) {
             *(int *) ((uint64_t) instance + 0x209) = 50;
         }
         if (railgun) {
-            *(bool *) ((uint64_t) instance + 0x110) = true;
+            *(bool *) ((uint64_t) instance + 0x110) = true; //railgun
         }
         if (markenemy) {
             *(bool *) ((uint64_t) instance + 0x179) = true;
         }
         if (rocketfire) {
-            *(bool *) ((uint64_t) instance + 0xA4) = true;
+            *(bool *) ((uint64_t) instance + 0xA4) = true; //bazooka
         }
         if (damageReflectionValue) {
             *(float *) ((uint64_t) instance + 0x20C) = 200.0;
@@ -315,7 +317,7 @@ void BankController(void *instance) {
             BankControllerHookInitialized = true;
             LOGI("GameManager_LateUpdate hooked");
             if (addgems) {
-                AddGems(instance, 100, true);
+                AddGems(instance, 100, true); //BankController$$AddGems
             }
         }
 
@@ -336,7 +338,7 @@ int getlevel(void *instance) {
     if (instance != NULL && level > 1) {
         return (int)level;
     }
-    return old_getlevel(instance);
+    return old_getlevel(instance);  //ExperienceController
 }
 
 
