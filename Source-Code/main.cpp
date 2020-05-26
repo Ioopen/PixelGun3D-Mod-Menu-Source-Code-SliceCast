@@ -244,7 +244,7 @@ void PlayerMoveCUpdate(void *instance) {
             LOGI("GameManager_LateUpdate hooked");
         }
         if (chams) {
-            *(bool *) ((uint64_t) instance + 0x3A8) = true; //player_move_c$$activatedXray
+            *(bool *) ((uint64_t) instance + 0x3A8) = true; //player_move_c$$丑丛东世丅丑丛丘三 //Xray-Wallhack
         }
         if (imInvisible) {
             *(bool *) ((uint64_t) instance + 0x2BA) = true;
