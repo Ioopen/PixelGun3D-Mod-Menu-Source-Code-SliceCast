@@ -300,15 +300,15 @@ void WeapSoundsUpdate(void *instance) {
     old_WeapSoundsUpdate(instance);
 }
 
-void (*AddGems)(void* _this, int amount, bool countToEarned);
+void (*AddGems)(void* instance, int amount, bool countToEarned);
 
 void(*old_BankController)(void *instance);
 void BankController(void *instance) {
     if(instance != NULL) {
         if (addcoins)
         {
-            void (*AddCoins)(void* _this, int, bool, int) =
-            (void (*)(void* _this, int, bool, int))getAbsoluteAddress(libName, 0x211ADEC); // BankController$$AddCoins
+            void (*AddCoins)(void* instance, int, bool, int) =
+            (void (*)(void* instance, int, bool, int))getAbsoluteAddress(0x211ADEC); // BankController$$AddCoins
 
             AddCoins(instance, 100, true, 1);
             addcoins = !AddCoins;
